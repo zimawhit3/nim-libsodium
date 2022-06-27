@@ -1100,7 +1100,20 @@ type
   CryptoKxRxKey = string
   CryptoKxTxKey = string
 
-#TODO crypto_kx_seed_keypair
+proc crypto_kx_seed_keypair(
+  pk: cptr,
+  sk: cptr,
+  seed: cptr
+): cint {.sodium_import.}
+
+proc crypto_kx_seed_keypair*(seed: cptr): (CryptoKxPublicKey, CryptoKxSecretKey) =
+  result[0] = newString crypto_kx_PUBLICKEYBYTES()
+  result[1] = newString crypto_kx_SECRETKEYBYTES()
+  let
+    pk = cpt result[0]
+    sk = cpt result[1]
+  let rc = crypto_kx_seed_keypair(pk, sk, seed)
+  check_rc rc
 
 proc crypto_kx_keypair(
   pk: cptr,

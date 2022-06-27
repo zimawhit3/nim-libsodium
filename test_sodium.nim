@@ -488,6 +488,13 @@ suite "key exchange":
     check pk.len == crypto_kx_PUBLICKEYBYTES()
     check sk.len == crypto_kx_SECRETKEYBYTES()
 
+  test "crypto_kx_seed_keypair":
+    let 
+      seed      = cast[ptr char](repeat('s', crypto_kx_SEEDBYTES()).cstring)
+      (pk, sk)  = crypto_kx_seed_keypair(seed)
+    check pk.len == crypto_kx_PUBLICKEYBYTES()
+    check sk.len == crypto_kx_SECRETKEYBYTES()
+
   test "crypto_kx_client_session_keys":
     let
       (cpub, csec) = crypto_kx_keypair() # client
