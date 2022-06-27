@@ -45,7 +45,7 @@ type SodiumError* = object of Exception
 template check_rc(rc: cint): untyped =
   ## Expect return code to be 0, raise an exception otherwise
   if rc != 0:
-    raise newException(SodiumError, "return code: $#" % $rc)
+    raise newException(SodiumError, "return code: " & $rc)
 
 
 # Initialization
